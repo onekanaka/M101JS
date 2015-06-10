@@ -1,7 +1,3 @@
-
-
-[this link for homework 2-1](https://github.com/onekanaka/M101JS/tree/master/hw2-1)
-
 # M101JS Homework 2-2
 
 To test this application, first you need to have `mongod` running in your command line.
