@@ -8,7 +8,7 @@ MongoClient.connect('mongodb://localhost:27017/school', function(err, db) {
     var data = db.collection('students');
 
 	var cursor = data.find({});
-	
+
 	cursor.each(function(err, doc) {
 		if(err) {
 			throw err;
@@ -24,7 +24,7 @@ MongoClient.connect('mongodb://localhost:27017/school', function(err, db) {
 });
 
 function process(db, doc) {
-	if (db ==null || doc == null) { 
+	if (db == null || doc == null) { 
 		return;
 	}
 	
