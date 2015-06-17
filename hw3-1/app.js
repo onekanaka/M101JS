@@ -7,29 +7,31 @@ MongoClient.connect('mongodb://localhost:27017/school', function(err, db) {
 
 	var data = db.collection('students');
 
-	var cursor = data.find({});
-
-	cursor.each(function(err, doc) {
-		if(err) {
-			throw err;
-		}
+	var query = {};
+	
+	data.count(query, function(err, count) {
 		
-		if(doc == null) {
-			return db.close();
-		} else {
-			process(db, doc);
-		}
-	});
+		var cursor = data.find(query);
+
+		cursor.each(function(err, doc) {
+			if(err) {
+				throw err;
+			}
+			
+			if(doc != null) {
+				process(db, data, count, doc);
+			}
+		});
+    });
 	
 });
 
-function process(db, doc) {
+var totalCount = 0;
+
+function process(db, data, count, doc) {
 	if (db == null || doc == null) { 
 		return;
 	}
-	
-	console.log("BEFORE:");
-	console.log(doc);
 	
 	var dataArray = doc["scores"];
 	
@@ -58,10 +60,32 @@ function process(db, doc) {
 	
 	doc["scores"] = finalScores;
 	
-	var query = { '_id' : doc['_id'] };
+	var targetQuery = { '_id' : doc['_id'] };
 
-	db.collection('students').update(query, doc, function(err, updatedDocumentsTotal) {
-		console.log("AFTER:");
+	db.collection('students').update(targetQuery, doc, function(err, updatedDocumentsTotal) {
+		if(err) {
+			throw err;
+		}
+	
 		console.log(doc);
+		
+		totalCount++;
+
+		if (totalCount >= count) {
+			doAggregate(db, data);
+		}
 	});
 }
+
+function doAggregate(db, data) {
+	var command = [{ '$unwind' : '$scores' } , { '$group' : { '_id' : '$_id' , 'average' : { $avg : '$scores.score' } } } , { '$sort' : { 'average' : -1 } } , { '$limit' : 1 }];
+    data.aggregate(command, function(err, result) {
+		if (result.length > 0) {
+			console.log("\nThe final highest average in the class is student " + result[0]._id + " with score " + result[0].average);
+		} else {
+			console.log("\nNo average was found.");
+		}
+		db.close();
+	});
+}
+
