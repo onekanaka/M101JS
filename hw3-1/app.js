@@ -1,11 +1,11 @@
 var MongoClient = require('mongodb').MongoClient;
 
 MongoClient.connect('mongodb://localhost:27017/school', function(err, db) {
-    if(err) { 
+	if(err) { 
 		throw err;
 	}
 
-    var data = db.collection('students');
+	var data = db.collection('students');
 
 	var cursor = data.find({});
 
