@@ -2,20 +2,19 @@
 
 To test this application, first you need to have `mongod` running in your command line.
 
-After that, open a new command line pointing to this folder's path, and run the next command to load all the data from `posts.json`:
-
-(Make sure you don't have already a `blog` db, if you do, run:
+Make sure you don't have already a `blog` db, if you do, run inside the mongo shell:
 ```
 use blog
 db.posts.drop()
 ```
-)
+
+After that, go to a command line pointing to this folder's path, and run the next command to load all the data from `posts.json`:
 
 ```
 mongoimport -d blog -c posts < posts.json
 ```
 
-After it is done, run this in another command line:
+After it is done, run this:
 
 ```
 mongo < hw4-3.js
