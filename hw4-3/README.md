@@ -1,8 +1,8 @@
 # M101JS Homework 4-3
 
-To test this application, first you need to have `mongod` running in your command line.
+To test this application, first you need to have `mongod` running in a command line.
 
-Make sure you don't have already a `blog` db, if you do, run inside the mongo shell:
+Make sure you don't have already a `blog` db, if you do, run this inside the mongo shell:
 ```
 use blog
 db.posts.drop()
