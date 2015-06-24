@@ -1,3 +1,30 @@
+# M101JS Homework 4-3
+
+To test this application, first you need to have `mongod` running in your command line.
+
+After that, open a new command line pointing to this folder's path, and run the next command to load all the data from `posts.json`:
+
+(Make sure you don't have already a `blog` db, if you do, run:
+```
+use blog
+db.posts.drop()
+```
+)
+
+```
+mongoimport -d blog -c posts < posts.json
+```
+
+After it is done, run this in another command line:
+
+```
+mongo < hw4-3.js
+```
+
+The neccesary indexes will be created. You can test this by using the instructions for validation below.
+
+#Original README
+
 To check whether you have added the right index on the posts collection, run
 	cd validate
 	npm install
