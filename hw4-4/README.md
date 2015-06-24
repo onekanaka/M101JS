@@ -2,7 +2,7 @@
 
 To test this application, first you need to have `mongod` running in a command line.
 
-After that, go to a command line pointing to this folder's path, and run the next command to load all the data from `posts.json`:
+After that, go to a command line pointing to this folder's path, and run the next command to load all the data from `sysprofile.json`:
 
 ```
 mongoimport -d m101 -c profile < sysprofile.json
